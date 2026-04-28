@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-turbopack --use-npm --skip-install --yes)",
+      "Bash(mkdir -p /tmp/marshai-docs)",
+      "Bash(mv CLAUDE.md CLAUDE_STAGE2.md SPEC.md SPEC_STAGE2.md /tmp/marshai-docs/)"
+    ]
+  }
+}
