@@ -26,7 +26,11 @@
       "Bash(rm -f /tmp/marshai.tar.gz)",
       "Bash(tar --exclude=marshai/node_modules --exclude=marshai/.next --exclude=marshai/.git --exclude=marshai/.vercel --exclude=marshai/.env --exclude=marshai/.env.local --exclude=marshai/.env.development --exclude=marshai/.env.production --exclude=marshai/dev.log '--exclude=marshai/*.log' -czf /tmp/marshai.tar.gz marshai)",
       "Bash(tar tzf *)",
-      "Bash(scp -q /tmp/marshai.tar.gz fridgeai-wg:/tmp/marshai.tar.gz)"
+      "Bash(scp -q /tmp/marshai.tar.gz fridgeai-wg:/tmp/marshai.tar.gz)",
+      "Skill(update-config)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
