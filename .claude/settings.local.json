@@ -4,7 +4,29 @@
       "Bash(npm --version)",
       "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-turbopack --use-npm --skip-install --yes)",
       "Bash(mkdir -p /tmp/marshai-docs)",
-      "Bash(mv CLAUDE.md CLAUDE_STAGE2.md SPEC.md SPEC_STAGE2.md /tmp/marshai-docs/)"
+      "Bash(mv CLAUDE.md CLAUDE_STAGE2.md SPEC.md SPEC_STAGE2.md /tmp/marshai-docs/)",
+      "Bash(npm install *)",
+      "Bash(npx next *)",
+      "Bash(node_modules/.bin/next build *)",
+      "Bash(node node_modules/next/dist/bin/next build)",
+      "Bash(curl *)",
+      "Bash(node node_modules/next/dist/bin/next dev --port 3002)",
+      "Bash(node node_modules/next/dist/bin/next dev --port 3003)",
+      "Bash(node node_modules/next/dist/bin/next dev --port 3004)",
+      "Bash(node -e \"console.log\\('DATABASE_URL:', process.env.DATABASE_URL ? 'set \\('+process.env.DATABASE_URL.slice\\(0, 30\\)+'...\\)' : 'NOT SET'\\)\")",
+      "Bash(node *)",
+      "Bash(npm uninstall *)",
+      "Bash(vercel --version)",
+      "Bash(vercel --prod --yes)",
+      "Bash(npm run *)",
+      "Bash(vercel env *)",
+      "Bash(ssh -o ConnectTimeout=8 -o BatchMode=yes fridgeai-wg 'whoami; hostname; uname -a')",
+      "Bash(ssh fridgeai-wg *)",
+      "Read(//c/Users/Anton/Desktop/**)",
+      "Bash(rm -f /tmp/marshai.tar.gz)",
+      "Bash(tar --exclude=marshai/node_modules --exclude=marshai/.next --exclude=marshai/.git --exclude=marshai/.vercel --exclude=marshai/.env --exclude=marshai/.env.local --exclude=marshai/.env.development --exclude=marshai/.env.production --exclude=marshai/dev.log '--exclude=marshai/*.log' -czf /tmp/marshai.tar.gz marshai)",
+      "Bash(tar tzf *)",
+      "Bash(scp -q /tmp/marshai.tar.gz fridgeai-wg:/tmp/marshai.tar.gz)"
     ]
   }
 }
