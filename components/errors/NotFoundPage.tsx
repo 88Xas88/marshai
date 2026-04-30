@@ -140,7 +140,6 @@ function Header() {
         </Link>
         <nav className="hidden md:flex items-center gap-5 text-[12px]" style={{ color: 'var(--color-text-secondary)' }}>
           <Link href="/plan/example-spb">Примеры</Link>
-          <a href="#blog" aria-disabled>Блог</a>
         </nav>
         <Link
           href="/"
