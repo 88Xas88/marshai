@@ -8,9 +8,9 @@ const BASE = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://marshai.ru').replace(
 
 // User-saved планы (с email) НЕ включаем — это приватные данные.
 // /account, /account/login, /auth/verify, /generating, /api/* — служебные.
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
-  const posts = getAllPosts()
+  const posts = await getAllPosts()
 
   const staticEntries: MetadataRoute.Sitemap = [
     {

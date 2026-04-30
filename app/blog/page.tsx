@@ -27,8 +27,12 @@ function formatDate(iso: string): string {
   return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`
 }
 
-export default function BlogIndexPage() {
-  const posts = getAllPosts()
+// БД-источник теперь — обращаемся каждый запрос. Next кеширует prerender,
+// но статьи могут публиковаться/удаляться через админку — нужен dynamic.
+export const dynamic = 'force-dynamic'
+
+export default async function BlogIndexPage() {
+  const posts = await getAllPosts()
 
   return (
     <BlogShell>

@@ -9,8 +9,13 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+// Дёргаем БД на каждом запросе — статьи могут публиковаться/обновляться
+// через админку, ISR не подходит без on-demand revalidation.
+export const dynamic = 'force-dynamic'
+
 export async function generateStaticParams() {
-  return getPostSlugs().map((slug) => ({ slug }))
+  const slugs = await getPostSlugs()
+  return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

@@ -75,7 +75,7 @@ const tables = await sql`
   SELECT table_name
   FROM information_schema.tables
   WHERE table_schema = 'public'
-    AND table_name IN ('plans', 'price_alerts', 'users', 'auth_tokens')
+    AND table_name IN ('plans', 'price_alerts', 'users', 'auth_tokens', 'admin_users', 'blog_articles')
   ORDER BY table_name
 `
 console.log('  Tables:', tables.map((t) => t.table_name).join(', '))

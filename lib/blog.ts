@@ -1,76 +1,71 @@
-import { readFileSync, readdirSync, existsSync } from 'node:fs'
-import { join } from 'node:path'
-import matter from 'gray-matter'
 import { marked } from 'marked'
+import { listPublished, getPublishedBySlug, type BlogArticle } from '@/lib/blog-db'
 
-const POSTS_DIR = join(process.cwd(), 'content', 'blog')
+// === Публичный фасад блога ===
+//
+// До stage 5 статьи лежали в content/blog/*.md и читались с диска. Теперь
+// источник — таблица blog_articles в Neon. Этот файл — тонкий слой над
+// blog-db.ts: парсит markdown в HTML + вычисляет метаданные.
+//
+// Файлы content/blog/*.md остаются как backup в репо, но в рантайме не
+// читаются (импортированы в БД через scripts/migrate-blog-files.mjs).
 
-export interface PostFrontmatter {
+export interface PostMeta {
   title: string
   slug: string
   description: string
   keywords?: string[]
   publishedAt: string
   updatedAt?: string
-  readingMinutes?: number
+  readingMinutes: number
 }
 
-// Чистый frontmatter без тела — для списка /blog.
-export type PostMeta = PostFrontmatter
-
-export interface Post extends PostFrontmatter {
-  // С телом — для страницы статьи.
+export interface Post extends PostMeta {
   contentMarkdown: string
   contentHtml: string
 }
 
-function listFiles(): string[] {
-  if (!existsSync(POSTS_DIR)) return []
-  return readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'))
-}
-
-function readPostFile(file: string): { data: PostFrontmatter; content: string } {
-  const raw = readFileSync(join(POSTS_DIR, file), 'utf8')
-  const parsed = matter(raw)
-  return {
-    data: parsed.data as PostFrontmatter,
-    content: parsed.content,
-  }
-}
-
-// Грубая оценка времени чтения: 180 слов/мин для русскоязычного читателя.
+// Грубая оценка: 180 слов/мин для русскоязычного читателя.
 function estimateReadingMinutes(text: string): number {
   const words = text.trim().split(/\s+/).length
   return Math.max(1, Math.round(words / 180))
 }
 
-export function getAllPosts(): PostMeta[] {
-  return listFiles()
-    .map((file) => {
-      const { data, content } = readPostFile(file)
-      return {
-        ...data,
-        readingMinutes: data.readingMinutes ?? estimateReadingMinutes(content),
-      }
-    })
-    .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1))
+function articleToMeta(a: BlogArticle): PostMeta {
+  return {
+    title: a.metaTitle ?? a.title,
+    slug: a.slug,
+    description: a.metaDescription ?? a.description,
+    keywords: a.keywords,
+    publishedAt: a.publishedAt ?? a.createdAt,
+    updatedAt: a.updatedAt,
+    readingMinutes: estimateReadingMinutes(a.content),
+  }
 }
 
-export function getPostSlugs(): string[] {
-  return listFiles().map((f) => f.replace(/\.md$/, ''))
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const articles = await listPublished()
+  return articles.map(articleToMeta)
+}
+
+export async function getPostSlugs(): Promise<string[]> {
+  const articles = await listPublished()
+  return articles.map((a) => a.slug)
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const file = `${slug}.md`
-  if (!listFiles().includes(file)) return null
-
-  const { data, content } = readPostFile(file)
-  // marked возвращает Promise в новых версиях если есть async-extension; используем sync вариант.
-  const html = marked.parse(content, { async: false }) as string
+  const a = await getPublishedBySlug(slug)
+  if (!a) return null
+  const html = marked.parse(a.content, { async: false }) as string
   return {
-    ...data,
-    readingMinutes: data.readingMinutes ?? estimateReadingMinutes(content),
-    contentMarkdown: content,
+    title: a.title,
+    slug: a.slug,
+    description: a.description,
+    keywords: a.keywords,
+    publishedAt: a.publishedAt ?? a.createdAt,
+    updatedAt: a.updatedAt,
+    readingMinutes: estimateReadingMinutes(a.content),
+    contentMarkdown: a.content,
     contentHtml: html,
   }
 }
