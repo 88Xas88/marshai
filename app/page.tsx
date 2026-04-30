@@ -44,6 +44,7 @@ function NavBar() {
           <span className="text-[15px] font-medium tracking-tight">Marshai</span>
         </Link>
         <nav className="hidden md:flex items-center gap-5 text-[13px]" style={{ color: 'var(--color-text-secondary)' }}>
+          <Link href="/blog" className="hover:text-[var(--color-text-primary)]">Блог</Link>
           <Link href="/plan/example-spb" className="hover:text-[var(--color-text-primary)]">Примеры</Link>
           <Link href="/account" className="hover:text-[var(--color-text-primary)]">Мои поездки</Link>
           <Link

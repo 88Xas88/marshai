@@ -139,6 +139,7 @@ function Header() {
           <span className="text-[14px]" style={{ fontWeight: 500 }}>Marshai</span>
         </Link>
         <nav className="hidden md:flex items-center gap-5 text-[12px]" style={{ color: 'var(--color-text-secondary)' }}>
+          <Link href="/blog">Блог</Link>
           <Link href="/plan/example-spb">Примеры</Link>
         </nav>
         <Link
