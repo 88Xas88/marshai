@@ -108,7 +108,17 @@ ${ctx.join('\n') || '(данные о транспорте/отелях ещё �
 }
 
 const apiKey = process.env.ANTHROPIC_API_KEY
-const client: Anthropic | null = apiKey ? new Anthropic({ apiKey }) : null
+
+// Anthropic geo-блокирует RU IP с 403, поэтому сервер ходит в Anthropic
+// через Cloudflare AI Gateway (US/EU edge). Можно переопределить через
+// ANTHROPIC_BASE_URL в .env.production если переехали на другой прокси.
+const ANTHROPIC_BASE_URL =
+  process.env.ANTHROPIC_BASE_URL ??
+  'https://gateway.ai.cloudflare.com/v1/00c114e64e1b96d4ebef2716260184f2/marshai-anthropic/anthropic'
+
+const client: Anthropic | null = apiKey
+  ? new Anthropic({ apiKey, baseURL: ANTHROPIC_BASE_URL })
+  : null
 
 export async function generateItinerary(
   input: ItineraryGenerationInput
