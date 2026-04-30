@@ -1,0 +1,47 @@
+{
+  "name": "Marshai — AI-планировщик путешествий",
+  "short_name": "Marshai",
+  "description": "План поездки за 30 секунд: реальные цены билетов, отели, маршрут по дням и карта.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F2F2EF",
+  "theme_color": "#2C2C2A",
+  "orientation": "portrait-primary",
+  "lang": "ru",
+  "scope": "/",
+  "categories": ["travel", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Спланировать поездку",
+      "short_name": "Новый план",
+      "url": "/",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Мои поездки",
+      "short_name": "Мои поездки",
+      "url": "/account",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
