@@ -31,6 +31,18 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  // Канонический хост — без www. Любой запрос на www.marshai.ru уезжает 308-м
+  // на marshai.ru с тем же путём и query.
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.marshai.ru' }],
+        destination: 'https://marshai.ru/:path*',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
