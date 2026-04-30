@@ -71,10 +71,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  // ID веб-мастер-консолей: подставить когда домен подтвердится.
   verification: {
-    // google: 'TODO_google_site_verification_code',
-    // yandex: 'TODO_yandex_verification_code',
+    google: 'p4eVW6Oh3dPi-MQBe5CoTev9lQLuUuUqTHOJHx8spU0',
+    yandex: '9bafec36870de72c',
   },
   category: 'travel',
 }
